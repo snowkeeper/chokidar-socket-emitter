@@ -15,20 +15,32 @@ module.exports = (opts, cb) => {
   if (!error) {
     baseURL = pjson.jspm && pjson.jspm.directories && pjson.jspm.directories.baseURL || pjson.directories && pjson.directories.baseURL
   }
+  
+  let app = false;
+  let port = false;
+  
+  if(opts.io) {
+	  
+	  var io = opts.io;
+	  
+  } else {
+	  
+	  app = opts.app
+	  if (!app) {
+		app = require('http').createServer()
+	  }
 
-  let app = opts.app
-  if (!app) {
-    app = require('http').createServer()
+	  var io = require('socket.io')(app)
+	  if (!opts.app) {
+		port = opts.port || 9111
+		app.listen(port, () => {
+		  console.log('chokidar-socket-emitter listening on ' + port)
+		  cb && cb()
+		})
+	  }
+	  
   }
-
-  var io = require('socket.io')(app)
-  if (!opts.app) {
-    let port = opts.port || 9111
-    app.listen(port, () => {
-      console.log('chokidar-socket-emitter listening on ' + port)
-      cb && cb()
-    })
-  }
+  
   const pathToWatch = opts.path || baseURL || '.'
   let ignoredPaths = [
     /[\/\\]\./,
