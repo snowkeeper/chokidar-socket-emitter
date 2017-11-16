@@ -40,7 +40,7 @@ chokidarEvEmitter({port: 8090, path: '.'})
 //you can also supply a http server instance, that way it will run within your server, no need for extra port
 require('chokidar-socket-emitter')({app: server})  
 
-//you can also supply a io server instance
+//you can also supply an io server instance
 require('chokidar-socket-emitter')( { io: my.io } ) 
 ```
 
