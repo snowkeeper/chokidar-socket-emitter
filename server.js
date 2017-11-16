@@ -54,7 +54,7 @@ module.exports = (opts, cb) => {
     ignored: ignoredPaths,
     ignoreInitial: true
   }, opts.chokidar)
-  console.log('chokidar watching ', path.resolve(pathToWatch))
+  //console.log('chokidar watching ', path.resolve(pathToWatch))
   var watcher = chokidar.watch(pathToWatch, chokidarOpts).on('all', (event, onPath) => {
     let absolutePath = path.join(process.cwd(), onPath)
     if (opts.relativeTo) {
